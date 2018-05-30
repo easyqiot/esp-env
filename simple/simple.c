@@ -10,6 +10,8 @@
 #include "easyq_config.h"
 
 #include "easyq.h"
+#include "common.h"
+
 
 #define STATUS_QUEUE "status"
 #define COMMAND_QUEUE "cmd"
@@ -24,6 +26,9 @@ void sender(void* args) {
     Queue * queue = Queue_new(STATUS_QUEUE);
     while (1) {
         delay(1000);
+    	// Wait for wifi conection
+        wait_for_wifi_connection();
+        
         printf("Inititlizing easyq\n");
         err = easyq_init(&eq);
         if (err != ERR_OK) {
